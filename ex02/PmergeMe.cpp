@@ -2,6 +2,11 @@
 
 PmergeMe::PmergeMe(int argc, char **argv)
 {
+    clock_t init;
+    clock_t finish;
+    double time_dq;
+    double time_vt;
+
     for (int i = 1; i < argc; i++)
     {
         std::istringstream ss(argv[i]);
@@ -10,26 +15,33 @@ PmergeMe::PmergeMe(int argc, char **argv)
         if (!(ss >> result) || result < 0)
             throw (PmergeMe::WrongInput());
         this->_deque.push_back(result);
-        this->_list.push_back(result);
+        this->_vector.push_back(result);
     }
     std::cout << "Before: ";
     display(this->_deque);
 
-    //ordena deque
-    //ordena list
+    init = clock();
+    mergeDeque(); //ordena deque
+    finish = clock();
+    time_dq = (double)(finish - init) / CLOCKS_PER_SEC;
+
+    init = clock();
+    mergeVector(); //ordena vector
+    finish = clock();
+    time_vt = (double)(finish - init) / CLOCKS_PER_SEC;
     std::cout << "After: ";
+    display(this->_deque);
     //display secuencia ordenada
 
-    //añadir el tiempo
-    std::cout << "Time to process a range of " << argc - 1 << " elements with std::deque : " << std::endl;
-    std::cout << "Time to process a range of " << argc - 1 << " elements with std::list : " << std::endl;
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::deque : " << time_dq << std::endl;
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::list : " << time_vt << std::endl;
 }
 
 void PmergeMe::mergeDeque()
 {
 }
 
-void PmergeMe::mergeList()
+void PmergeMe::mergeVector()
 {
 }
 

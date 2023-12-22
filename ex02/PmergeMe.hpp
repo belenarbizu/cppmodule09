@@ -1,20 +1,21 @@
 #pragma once
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include <deque>
 #include <stdlib.h>
 #include <sstream>
+#include <ctime>
 
 class PmergeMe
 {
     private:
         std::deque<int> _deque;
-        std::list<int> _list;
+        std::vector<int> _vector;
         PmergeMe(const PmergeMe & pm);
         PmergeMe& operator=(const PmergeMe & pm);
         void mergeDeque();
-        void mergeList();
+        void mergeVector();
     public:
         PmergeMe(int argc, char **argv);
         ~PmergeMe();
