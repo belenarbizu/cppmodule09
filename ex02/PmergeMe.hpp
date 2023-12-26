@@ -14,8 +14,8 @@ class PmergeMe
         std::vector<int> _vector;
         PmergeMe(const PmergeMe & pm);
         PmergeMe& operator=(const PmergeMe & pm);
-        void mergeDeque();
-        void mergeVector();
+        void mergeDeque(int start, int end);
+        void mergeVector(int start, int end);
     public:
         PmergeMe(int argc, char **argv);
         ~PmergeMe();
@@ -36,4 +36,22 @@ void display(T & container)
         std::cout << *it << " ";
     }
     std::cout << std::endl;
+}
+
+template <typename V>
+void insertion(V & container, int start, int end)
+{
+    int temp;
+    int j;
+    for (int i = start + 1; i <= end; i++)
+    {
+        temp = container[i];
+        j = i - 1;
+        while (j >= 0 && container[j] > temp)
+        {
+            container[j + 1] = container[j];
+            j--;
+        }
+        container[j + 1] = temp;
+    }
 }

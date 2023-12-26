@@ -21,33 +21,50 @@ PmergeMe::PmergeMe(int argc, char **argv)
     display(this->_deque);
 
     init = clock();
-    mergeDeque(); //ordena deque
+    mergeDeque(0, this->_deque.size() - 1);
     finish = clock();
     time_dq = (double)(finish - init) / CLOCKS_PER_SEC;
 
     init = clock();
-    mergeVector(); //ordena vector
+    mergeVector(0, this->_vector.size() - 1);
     finish = clock();
     time_vt = (double)(finish - init) / CLOCKS_PER_SEC;
     std::cout << "After: ";
-    display(this->_deque);
-    //display secuencia ordenada
+    display(this->_vector);
 
-    std::cout << "Time to process a range of " << argc - 1 << " elements with std::deque : " << time_dq << std::endl;
-    std::cout << "Time to process a range of " << argc - 1 << " elements with std::list : " << time_vt << std::endl;
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::deque : " << std::fixed << time_dq << " us" << std::endl;
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::vector : " << std::fixed << time_vt << " us" << std::endl;
 }
 
-void PmergeMe::mergeDeque()
+
+void PmergeMe::mergeDeque(int start, int end)
 {
+    int mid;
+
+    mid = (start + end) / 2;
+    if (start < end)
+    {
+        mergeDeque(start, mid);
+        mergeDeque(mid + 1, end);
+        insertion(this->_deque, start, end);
+    }
 }
 
-void PmergeMe::mergeVector()
+void PmergeMe::mergeVector(int start, int end)
 {
+    int mid;
+
+    mid = (start + end) / 2;
+    if (start < end)
+    {
+        mergeVector(start, mid);
+        mergeVector(mid + 1, end);
+        insertion(this->_vector, start, end);
+    }
 }
 
 PmergeMe::~PmergeMe()
 {
-
 }
 
 PmergeMe::PmergeMe(const PmergeMe & pm)
